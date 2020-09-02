@@ -52,7 +52,7 @@ bstNode* Findmax(bstNode * root){
 }
 
 int Findminvalue(bstNode* root){
-	if(root->NULL){
+	if(root==NULL){
 		return -1;
 	}
 	while(root->left!=NULL){
@@ -61,7 +61,7 @@ int Findminvalue(bstNode* root){
 	return root->data;
 }
 int Findmaxvalue(bstNode* root){
-	if(root->NULL){
+	if(root==NULL){
 		return -1;
 	}
 	while(root->right!=NULL){
@@ -72,7 +72,7 @@ int Findmaxvalue(bstNode* root){
 
 //finding height of the tree using recursive method  : O(n)
 int heightTree(bstNode* root){
-	if(root->NULL){
+	if(root==NULL){
 		return -1;
 	}
 	int leftTreeH=heightTree(root->left);
@@ -85,7 +85,7 @@ int heightTree_Iterative(bstNode* root){
 	if(root==NULL){
 		return 0;
 	}
-	queue<bstNode* node>q;
+	queue<bstNode*>q;
 	q.push(root);
 	int height=0;
 	while(1){
@@ -148,7 +148,7 @@ void bfs(bstNode* root){
 	if(root==NULL){
 	    return ;
 	}
-	queue<bstNode* node>q;
+	queue<bstNode*>q;
 	q.push(root);
 	while(!q.empty()){
 		bstNode* temp=q.front();
@@ -189,7 +189,43 @@ void InorderTraversal(bstNode* root){
 	cout<<root->data<<" ";
 	InorderTraversal(root->right);
 }  
- 
+ // check if a TREE  is binary or not
+ //supporter functions islesser and isgreater
+ bool islesser(bstNode* root, int value){
+ 	if(root==NULL){
+ 		return true;
+ 	}
+ 	if(root->data <=value && islesser(root->left,value) && islesser(root->right,value)){
+ 		return true;
+ 	}
+ 	else{
+ 		return false;
+ 	}
+ }
+  //isgreater
+bool isgreater(bstNode* root, int value){
+ 	if(root==NULL){
+ 		return true;
+ 	}
+ 	if(root->data <=value && isgreater(root->left,value) && isgreater(root->right,value)){
+ 		return true;
+ 	}
+ 	else{
+ 		return false;
+ 	}
+ }
+ // main function to check 
+ bool isBST(bstNode* root){
+ 	if (root==NULL){
+ 		return true;
+ 	}
+ 	if(islesser(root->left,root->data) && isgreater(root->right,root->data) && isBST(root->right) && isBST(root->left)){
+ 		return true;
+ 	}
+ 	else{
+ 		return false;
+ 	}
+ }
 int main() {
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -202,6 +238,10 @@ int main() {
     	cin>>data;
     root=Insert(root,data);
     }
-    //do the operations which one you want to perform
+     InorderTraversal(root);
+    cout<<"\n";
+   PreorderTraversal(root);
+    cout<<"\n";
+    PostorderTraversal(root);
 	return 0;
 }
